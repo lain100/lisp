@@ -1,0 +1,72 @@
+" Toggle this for vim-sexp to not go into insert mode after wrapping something
+let g:sexp_insert_after_wrap = 0
+" Toggle this to disable automatically creating closing brackets and quotes
+let g:sexp_enable_insert_mode_mappings = 1
+
+Vocab
+COMPOUND FORM - text surrounded by (), [], or {}
+STRING - string, regex, or pattern
+COMMENT - Starts with a ;
+MACRO CHARACTERS - special set of leading characters
+Elements - Current string, comment, compound form, or macro character
+
+Selection
+vaf - Select current form (including braces)
+vif - Select current form (excluding braces)
+vaF - Select top level form (including braces)
+viF - Select top level form (excluding braces)
+vas - Select string (including quotes)
+vis - Select string (excluding quotes)
+vae - Select current element (including surrounding delimiters)
+vie - Select current element (excluding surrounding delimiters)
+
+Motion
+( - Nearest previous paired bracket
+) - Nearest next paired bracket
+W - Forward element wise (based on current level)
+B - Backwards element wise (based on current level)
+E - next element
+gE - previous element
+[[ - Previous top level element
+]] - Next top level element
+[e - Select previous adjacent element
+]e - Select next adjacent element
+
+Indent
+== - Indent current form
+=- - Indent top level form
+
+Wrapping
+,i - Surround form with (), place cursor at front
+,I - Surround form >Iwith (), place cursor at end
+,[ - Surround form with [], place cursor at front
+,] - Surround form with [], place cursor at end
+,{ - Surround form with {}, place cursor at front
+,} - Surround form with {}, place cursor at end
+
+,w - Surround element with (), place cursor at front
+,W - Surround element with (), place cursor at end
+,e[ - Surround element with [], place cursor at front
+,e] - Surround element with [], place cursor at back
+,e{ - Surround element with {}, place cursor at front
+,e} - Surround element with {}, place cursor at back
+
+List Manipulation
+,@ - splice current form into parent (+ (+ 1 2) 2) -> (+ + 1 2 2)
+,o - raises form to replace parent form (+ (+ 1 2) 2) -> (+ 1 2)
+,O - raises element to replace parent form (+ (+ 1 2) 2) -> (+ + 2)
+>f - swap a form right
+<f - swap a form left
+>e - swap an element right
+<e - swap an element left
+>) - Slurp right (+ (+ 1 2) 2) -> (+ (+ 1 2 2))
+<) - Barf right (+ (+ 1 2) 2) -> (+ (+ 1) 2 2)
+>( - Barf left (+ (+ 1 2) 2) -> (+ + (1 2) 2)
+<( - Slurp left  (+ (+ 1 2) 2) -> ((+ + 1 2) 2)
+
+Insertion Mapping
+<I - Insert at head of form
+>I - Insert at tail of form
+
+Insert Mode Mapping
+<BS> - Backspace will delete a pair
