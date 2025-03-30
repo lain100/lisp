@@ -5,17 +5,21 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 vk1C & LShift::return
-vk1C & i::Send, {Blind}{Up Down}
-vk1C & i Up::Send, {Blind}{Up Up}
-vk1C & k::Send, {Blind}{Down Down}
-vk1C & k Up::Send, {Blind}{Down Up}
-vk1C & j::
+LShift & h::Send, {Blind}{Numpadmult}
+LShift & j::Send, {Blind}{Numpaddiv}
+LShift & n::Send, {Blind}{Numpadadd}
+LShift & m::Send, {Blind}{Numpadsub}
+vk1C & k::Send, {Blind}{Up Down}
+vk1C & k Up::Send, {Blind}{Up Up}
+vk1C & j::Send, {Blind}{Down Down}
+vk1C & j Up::Send, {Blind}{Down Up}
+vk1C & h::
   if GetKeyState( "LShift", "P" )
     Send, {Blind}{Home}
   else
     Send, {Blind}{Left Down}
   return
-vk1C & j Up::Send, {Blind}{Left Up}
+vk1C & h Up::Send, {Blind}{Left Up}
 vk1C & l::
   if GetKeyState( "LShift", "P" )
     Send, {Blind}{End}
@@ -26,13 +30,6 @@ vk1C & l Up::Send, {Blind}{Right Up}
 vk1C & o::Send, {Blind}{BS}
 vk1C & p::Send, {Blind}{Del}
 vk1C & e::Send, {Blind}{Enter}
-vk1C & q::Send, {Blind}^{x}
-vk1C & x::Send, {Blind}^{y}
-vk1C & z::Send, {Blind}^{z}
-vk1C & h::Send, {Blind}{Numpadmult}
-vk1C & n::Send, {Blind}{Numpadadd}
-vk1C & m::Send, {Blind}{Numpadsub}
-vk1C & u::Send, {Blind}+{F6}
 vk1C & 1::Send, {Blind}{!}
 vk1C & 2::Send, {Blind}{@}
 vk1C & 3::Send, {Blind}{#}
@@ -53,7 +50,6 @@ vk1C & vkBB::Send, {Blind}{:}
 *vkBA::Send, {Blind}{'}
 vk1C & vkBA::Send, {Blind}{"}
 *]::Send, {Blind}{``}
-vk1C & ]::Send, {Blind}{|}
 vk1C & ,::Send, {Blind}{<}
 vk1C & .::Send, {Blind}{>}
 vk1C & /::Send, {Blind}{?}
@@ -108,17 +104,17 @@ vk1D & z::
   Click, Middle
   MouseMove, 0, 30, 0, R
   return
-vk1D & i::
+vk1D & h::
 vk1D & j::
 vk1D & k::
 vk1D & l::
   dX := 0, dY := 0, dS := 16, Delay := 80
-  while ( GetKeyState( "i", "P" ) || GetKeyState( "j", "P" ) || GetKeyState( "k", "P" ) || GetKeyState( "l", "P" ) ) {
+  while ( GetKeyState( "h", "P" ) || GetKeyState( "j", "P" ) || GetKeyState( "k", "P" ) || GetKeyState( "l", "P" ) ) {
     CoordMode, Mouse, Screen
-    dY := ( GetKeyState( "k", "P" ) - GetKeyState( "i", "P" ) ) * dS
-    dX := ( GetKeyState( "l", "P" ) - GetKeyState( "j", "P" ) ) * dS
-    dS := ( dX != 0 || dY != 0 ) ? dS * 1.14 : 16
-    Delay := ( dX != 0 || dY != 0 ) ? Delay * 0.96 : 80
+    dY := ( GetKeyState( "j", "P" ) - GetKeyState( "k", "P" ) ) * dS
+    dX := ( GetKeyState( "l", "P" ) - GetKeyState( "h", "P" ) ) * dS
+    dS := ( dX != 0 || dY != 0 ) ? ( ( dS < 80 ) ? dS * 1.14 : dS ) : 16
+    Delay := ( dX != 0 || dY != 0 ) ? ( Delay > 20 ? Delay * 0.94 : Delay ): 80
     MouseMove, dX, dY, 0, R
     Sleep, Delay
   }
