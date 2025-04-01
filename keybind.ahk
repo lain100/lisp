@@ -6,9 +6,11 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 vk1C & LShift::return
 LShift & h::Send, {Blind}{Numpadmult}
-LShift & j::Send, {Blind}{Numpaddiv}
-LShift & n::Send, {Blind}{Numpadadd}
-LShift & m::Send, {Blind}{Numpadsub}
+LShift & l::Send, {Blind}{Numpaddiv}
+LShift & j::Send, {Blind}{Numpadadd}
+LShift & k::Send, {Blind}{Numpadsub}
+LShift & u::Send, {Blind}{(}
+LShift & i::Send, {Blind}{)}
 vk1C & k::Send, {Blind}{Up Down}
 vk1C & k Up::Send, {Blind}{Up Up}
 vk1C & j::Send, {Blind}{Down Down}
@@ -37,11 +39,11 @@ vk1C & 4::Send, {Blind}{$}
 vk1C & 5::Send, {Blind}{`%}
 vk1C & 6::Send, {Blind}{^}
 vk1C & 7::Send, {Blind}{&}
-vk1C & 8::Send, {Blind}{(}
-vk1C & 9::Send, {Blind}{)}
+vk1C & u::Send, {Blind}{(}
+vk1C & i::Send, {Blind}{)}
+vk1C & 8::Send, {Blind}{~}
+vk1C & 9::Send, {Blind}{|}
 vk1C & -::Send, {Blind}{=}
-vk1C & ^::Send, {Blind}{~}
-vk1C & vkDC::Send, {Blind}{|}
 *@::Send, {Blind}{[}
 vk1C & @::Send, {Blind}{`{}
 *[::Send, {Blind}{]}
@@ -71,6 +73,7 @@ vk1C & vkE2::Send, {Blind}{_}
 ; change vkF0 to Ctrl in regedit
 +vk14::Return
 vk90::Return
+*Esc::Send, {Blind}{vkF2}{vkF3}{Esc}
 *RAlt::Send, {Blind}{vk5D}
 *Space::Send, {Blind}{Shift Down}
 *Space Up::
@@ -111,6 +114,7 @@ vk1D & l::
   dX := 0, dY := 0, dS := 16, Delay := 80
   while ( GetKeyState( "h", "P" ) || GetKeyState( "j", "P" ) || GetKeyState( "k", "P" ) || GetKeyState( "l", "P" ) ) {
     CoordMode, Mouse, Screen
+    dS := GetKeyState( "Ctrl", "P" ) ? 1 : dS
     dY := ( GetKeyState( "j", "P" ) - GetKeyState( "k", "P" ) ) * dS
     dX := ( GetKeyState( "l", "P" ) - GetKeyState( "h", "P" ) ) * dS
     dS := ( dX != 0 || dY != 0 ) ? ( ( dS < 80 ) ? dS * 1.14 : dS ) : 16
